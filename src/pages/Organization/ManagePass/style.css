@@ -1,0 +1,11 @@
+.org-pass {
+    display: grid;
+    justify-content: center;
+    grid-gap: 40px;
+    padding: 30px 20px 100px 20px;
+}
+
+.add-pass {
+    border: 2px;
+    border-style: solid;
+}

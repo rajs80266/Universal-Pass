@@ -1,10 +1,21 @@
+import { Button } from "@mui/material";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import './style.css';
 
 const ManagePass = (props) => {
-    console.log(props);
+    const history = useHistory();
     return (
-        <div>Manage Pass</div>
+        <div className="org-pass">
+            <h2>Manage Passes</h2>
+            <Button variant="contained" onClick={() => history.push("/organizationCurrentPasses")}>
+                View current Passes
+            </Button>
+
+            <div className="add-pass">
+                form
+            </div>
+        </div>
     );
 };
 

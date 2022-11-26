@@ -3,3 +3,8 @@
 * {
   font-family: Open Sans;
 }
+.shell{
+  height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
