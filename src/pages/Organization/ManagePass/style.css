@@ -6,6 +6,10 @@
 }
 
 .add-pass {
+    padding: 10px;
     border: 2px;
     border-style: solid;
+    display: grid;
+    grid-gap: 10px;
+    min-width: 400px;
 }
