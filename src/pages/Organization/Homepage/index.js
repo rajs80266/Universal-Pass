@@ -5,14 +5,14 @@ import './style.css';
 
 const HomePage = (props) => {
     console.log(props);
-    const history=useHistory();
+    const history = useHistory();
     return (
         <div className={"org-home"}>
             <h2>Welcome back!</h2>
-            <Button variant="contained" onClick={()=>history.push("/organizationManagePass")}>
+            <Button variant="contained" onClick={() => history.push("/organizationManagePass")}>
                 Manage passes
             </Button>
-            <Button variant="contained" onClick={()=>history.push("/organizationScanQr")}>
+            <Button variant="contained" onClick={() => history.push("/organizationScanQr")}>
                 verify passes
             </Button>
 

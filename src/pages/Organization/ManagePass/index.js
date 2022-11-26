@@ -20,12 +20,12 @@ const ManagePass = (props) => {
     return (
         <div className="org-pass">
             <h2>Manage Passes</h2>
-            <Button style={{maxWidth:"300px",justifySelf:"center"}} variant="contained" onClick={() => history.push("/organizationCurrentPasses")}>
+            <Button style={{ maxWidth: "300px", justifySelf: "center" }} variant="contained" onClick={() => history.push("/organizationCurrentPasses")}>
                 View current Passes
             </Button>
 
             <div className="add-pass">
-                <h4 style={{justifySelf:"center"}}>Add new pass</h4>
+                <h4 style={{ justifySelf: "center" }}>Add new pass</h4>
 
                 <TextField id="standard-basic" label="Validity" variant="standard" onChange={(e) => {
                     setValidity(e.target.value)
