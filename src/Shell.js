@@ -9,7 +9,7 @@ const Shell = (props) => {
     const { children } = props;
 
     return (
-        <div>
+        <div className='shell'>
             <Header />
             {children}
             <Footer />

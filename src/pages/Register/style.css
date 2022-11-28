@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  .form{
+    display: grid;
+    padding: 100px;
+    grid-gap: 30px;
+    
+    
+  }
+  .login-btn{
+    justify-self: center;
+    width:150px;
+  }
