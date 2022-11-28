@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.5.0 <=0.8.7;
+pragma experimental ABIEncoderV2;
 
 contract Universal_Pass {
     struct User {
@@ -14,6 +15,13 @@ contract Universal_Pass {
         uint256 cost;
     }
 
+    struct PurchasedPass {
+        address organization;
+        uint256 numOfDays;
+        uint256 cost;
+        uint256 purchasedOn;
+    }
+
     address public manager;
 
     mapping(address => User) public users;
@@ -21,6 +29,9 @@ contract Universal_Pass {
     address[] public unauthorizedOrganizations;
 
     mapping(address => Pass[]) organizationPassList;
+
+    mapping(address => PurchasedPass[]) purchasedPasses;
+    mapping(address => mapping(address => PurchasedPass[])) organizationPurchasedPasses;
 
     modifier onlyManager() {
         require(
@@ -46,8 +57,7 @@ contract Universal_Pass {
         User storage user = users[msg.sender];
         user.username = username;
         user.userType = userType;
-        user.authorized =
-            keccak256(bytes(userType)) != keccak256(bytes("organization"));
+        user.authorized = keccak256(bytes(userType)) != keccak256(bytes("organization"));
         user.registered = true;
 
         if (!user.authorized) {
@@ -121,6 +131,7 @@ contract Universal_Pass {
         public
         returns (Pass memory passDetails)
     {
+        require(users[msg.sender].authorized, "Requires manager approval");
         Pass memory pass = Pass({numOfDays: numOfDays, cost: cost});
         organizationPassList[msg.sender].push(pass);
         return pass;
@@ -158,5 +169,38 @@ contract Universal_Pass {
         returns (Pass memory passDetails)
     {
         return organizationPassList[organizationAddress][index];
+    }
+
+    function purchasePass(address organizationAddress, uint256 index)
+        public
+        returns (PurchasedPass memory purchasedPassDetails)
+    {
+        require(keccak256(bytes(users[msg.sender].userType)) == keccak256(bytes("customer")), "Only customer can purchase");
+        Pass memory pass = organizationPassList[organizationAddress][index];
+        PurchasedPass memory purchasedPass = PurchasedPass({
+            organization: organizationAddress,
+            numOfDays: pass.numOfDays,
+            cost: pass.cost,
+            purchasedOn: block.timestamp
+        });
+        purchasedPasses[msg.sender].push(purchasedPass);
+        organizationPurchasedPasses[msg.sender][organizationAddress].push(purchasedPass);
+        return purchasedPass;
+    }
+
+    function getPurchasedPass()
+        public
+        view
+        returns (PurchasedPass[] memory purchasedPassList)
+    {
+        return purchasedPasses[msg.sender];
+    }
+
+    function getOrganizationPurchasedPass(address organizationAddress)
+        public
+        view
+        returns (PurchasedPass[] memory purchasedPassList)
+    {
+        return organizationPurchasedPasses[msg.sender][organizationAddress];
     }
 }
