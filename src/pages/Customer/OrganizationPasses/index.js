@@ -4,7 +4,7 @@ import './style.css';
 
 const OrganizationPasses = (props) => {
     console.log(props);
-    const organiztions = ["asdf", "adsf", "asdf", "adsf"]
+    const organiztions = ["asdfa", "aadsf", "assdf", "addsf"]
     const [org, setOrg] = useState();
     const sampleCards = [{ tenure: "3 months", cost: "100$" }, { tenure: "6 months", cost: "200$" }, { tenure: "12 months", cost: "300$" }]
     const card = (tenure, cost) => {

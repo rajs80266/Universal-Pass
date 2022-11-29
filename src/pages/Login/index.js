@@ -1,5 +1,6 @@
-import { Button, FormControl, InputLabel, Link, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import './style.css';
 
 const Login = (props) => {
@@ -48,7 +49,7 @@ const Login = (props) => {
                 <Button className="login-btn" type="submit" color="primary" onClick={onSubmit} variant="contained">
                     Log in
                 </Button>
-                <Link style={{ textAlign: "center" }} href="/register">New to the application ? Sign up here</Link>
+                <Link style={{ textAlign: "center" }} to="/register">New to the application ? Sign up here</Link>
 
             </div>
         </div>
