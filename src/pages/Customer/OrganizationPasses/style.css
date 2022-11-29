@@ -1,0 +1,22 @@
+.org-passes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+.passes-grid{
+    display:grid;
+    grid-template-columns: 1fr  1fr 1fr;
+    padding:40px;
+    text-align: center;
+    grid-gap:20px;
+}
+@media (max-width: 700px) {
+    .passes-grid {
+        display:grid;
+        grid-template-columns: 1fr  1fr;
+        padding:40px;
+        grid-gap:20px;
+    }
+}
