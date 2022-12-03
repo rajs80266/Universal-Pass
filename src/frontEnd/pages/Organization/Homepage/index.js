@@ -6,17 +6,15 @@ import './style.css';
 const HomePage = (props) => {
     console.log(props);
     const history = useHistory();
-
     return (
         <div className={"org-home"}>
             <h2>Welcome back!</h2>
-            <Button variant="contained" onClick={() => history.push("/customerCurrentPasses")}>
-                View my passes
+            <Button variant="contained" onClick={() => history.push("/organizationManagePass")}>
+                Manage passes
             </Button>
-            <Button variant="contained" onClick={() => history.push("/customerOrganizationPasses")}>
-                Buy New Pass
+            <Button variant="contained" onClick={() => history.push("/organizationScanQr")}>
+                verify passes
             </Button>
-
 
         </div>
     );
