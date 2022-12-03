@@ -5,7 +5,6 @@ import Shell from './Shell';
 
 import CustomerCurrentPasses from './pages/Customer/CurrentPasses';
 import CustomerHomepage from './pages/Customer/Homepage';
-import CustomerManagePass from './pages/Customer/ManagePass';
 import CustomerOrganizationPasses from './pages/Customer/OrganizationPasses';
 import CustomerPurchase from './pages/Customer/Purchase';
 import Login from './pages/Login';
@@ -76,13 +75,8 @@ const App = () => {
           />
           <Route
             exact
-            path="/customerManagePass"
-            component={CustomerManagePass}
-          />
-          <Route
-            exact
             path="/customerOrganizationPasses"
-            component={CustomerOrganizationPasses}
+            render={() => <CustomerOrganizationPasses contract={contract} />}
           />
           <Route
             exact
@@ -97,7 +91,7 @@ const App = () => {
           <Route
             exact
             path="/managerHomepage"
-            component={ManagerHomepage}
+            render={() => <ManagerHomepage contract={contract} account={account}/>}
           />
           <Route
             exact

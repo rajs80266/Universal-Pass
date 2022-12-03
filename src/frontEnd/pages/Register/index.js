@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 
 const Register = (props) => {
-    const [userType, setUserType] = useState("User");
+    const [userType, setUserType] = useState("customer");
     const [name, setName] = useState();
     const [errors, setError] = useState({ email: false, password: false, name: false });
     const [loading, setLoading] = useState(true)
@@ -39,13 +39,13 @@ const Register = (props) => {
             <div className="form" >
                 <>
                     <FormControl fullWidth>
-                        <InputLabel >Login as</InputLabel>
+                        <InputLabel >Register as</InputLabel>
                         <Select
                             value={userType}
                             label="User type"
                             onChange={(e) => setUserType(e.target.value)}
                         >
-                            <MenuItem value={"User"}>User</MenuItem>
+                            <MenuItem value={"customer"}>Customer</MenuItem>
                             <MenuItem value={"organization"}>Organisation</MenuItem>
                         </Select>
                     </FormControl>

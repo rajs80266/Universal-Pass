@@ -39,7 +39,7 @@ const CurrentPasses = (props) => {
         <>
             <h2 style={{ alignSelf: "center" }}>Current Passes</h2>
             <div className="passes">
-                {myPasses && myPasses.map((c) => card(c.organization, c.cost, c.purchasedOn, c.numOfDays))}
+                {myPasses && myPasses.map((c) => card(c.organization, c.cost.toNumber(), c.purchasedOn.toNumber(), c.numOfDays.toNumber()))}
             </div>
         </>
     );

@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import './style.css';
 
 const Login = (props) => {
-    const [userType, setUserType] = useState("User");
+    const [userType, setUserType] = useState("customer");
     const { contract } = props
 
 
@@ -13,10 +13,14 @@ const Login = (props) => {
     const history = useHistory()
     const loginAccount = async () => {
         try {
+            if (userType.toLocaleLowerCase() == "manager") {
+                history.push('/managerHomepage')
+                return
+            }
             const allowLogin = await contract.login()
             if (allowLogin) {
                 switch (userType.toLocaleLowerCase()) {
-                    case ("user"):
+                    case ("customer"):
                         history.push('/customerHomepage')
                         break;
                     case ("organization"):
@@ -46,7 +50,7 @@ const Login = (props) => {
                             label="User type"
                             onChange={(e) => setUserType(e.target.value)}
                         >
-                            <MenuItem value={"User"}>User</MenuItem>
+                            <MenuItem value={"customer"}>Customer</MenuItem>
                             <MenuItem value={"Manager"}>Manager</MenuItem>
                             <MenuItem value={"organization"}>Organisation</MenuItem>
                         </Select>
