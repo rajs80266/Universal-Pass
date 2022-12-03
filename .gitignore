@@ -7,6 +7,9 @@
 
 # testing
 /coverage
+src/ethereum/cache
+src/ethereum/artifacts
+src/contractsData
 
 # production
 /build

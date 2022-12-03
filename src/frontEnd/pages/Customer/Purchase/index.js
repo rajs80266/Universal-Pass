@@ -1,11 +1,11 @@
 import React from "react";
 import './style.css';
 
-const ScanQr = (props) => {
+const Purchase = (props) => {
     console.log(props);
     return (
-        <div>Scan Qr Code</div>
+        <div>Purchase</div>
     );
 };
 
-export default ScanQr;
+export default Purchase;

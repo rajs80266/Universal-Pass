@@ -5,7 +5,11 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.10.15",
+    "@mui/material": "^5.10.16",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.2",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^8.0.5",
@@ -15,6 +19,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "deploy": "npx hardhat run src/ethereum/scripts/deploy.js --network localhost",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -1,0 +1,74 @@
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import React, { useState } from "react";
+
+import { Link, useHistory } from "react-router-dom";
+import './style.css';
+
+const Login = (props) => {
+    const [userType, setUserType] = useState("User");
+    const { contract } = props
+
+
+    const [loading, setLoading] = useState(true)
+    const history = useHistory()
+    const loginAccount = async () => {
+        try {
+            const allowLogin = await contract.login()
+            if (allowLogin) {
+                switch (userType.toLocaleLowerCase()) {
+                    case ("user"):
+                        history.push('/customerHomepage')
+                        break;
+                    case ("organization"):
+                        history.push('/organizationHomepage')
+                        break;
+                }
+            }
+            else {
+                alert("Login failed")
+            }
+
+        }
+        catch (e) {
+            alert("Login failed")
+        }
+    }
+
+    return (
+
+        <div className="Login">
+            <div className="form" >
+                <>
+                    <FormControl fullWidth>
+                        <InputLabel >Login as</InputLabel>
+                        <Select
+                            value={userType}
+                            label="User type"
+                            onChange={(e) => setUserType(e.target.value)}
+                        >
+                            <MenuItem value={"User"}>User</MenuItem>
+                            <MenuItem value={"Manager"}>Manager</MenuItem>
+                            <MenuItem value={"organization"}>Organisation</MenuItem>
+                        </Select>
+                    </FormControl>
+                </>
+                {/* <TextField id="standard-basic" label="Email" variant="standard" onChange={(e) => {
+                    setEmail(e.target.value)
+                    setError((e) => { return { ...e, email: false } })
+                }} error={errors.email} />
+                <TextField id="standard-basic" label="Password" variant="standard" type="password" onChange={(e) => {
+                    setPassword(e.target.value)
+                    setError((e) => { return { ...e, password: false } })
+                }} error={errors.password} /> */}
+
+                <Button className="login-btn" type="submit" color="primary" onClick={loginAccount} variant="contained">
+                    Log in
+                </Button>
+                <Link style={{ textAlign: "center" }} to="/register">New to the application ? Sign up here</Link>
+
+            </div>
+        </div>
+    );
+};
+
+export default Login;

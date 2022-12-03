@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.5.0 <=0.8.7;
+pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 contract Universal_Pass {
@@ -99,7 +99,7 @@ contract Universal_Pass {
     }
 
     function login() public view returns (bool allowLogin) {
-        return users[msg.sender].registered;
+        return  users[msg.sender].authorized;
     }
 
     function isUserAuthorized(address userAddress)
