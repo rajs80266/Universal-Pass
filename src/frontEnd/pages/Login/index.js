@@ -6,38 +6,30 @@ import './style.css';
 
 const Login = (props) => {
     const [userType, setUserType] = useState("customer");
-    const { contract } = props
+    const { contract } = props;
 
-
-    const [loading, setLoading] = useState(true)
-    const history = useHistory()
+    const history = useHistory();
     const loginAccount = async () => {
         try {
-            if (userType.toLocaleLowerCase() == "manager") {
-                history.push('/managerHomepage')
-                props.onLogin()
-                return
-            }
-            const allowLogin = await contract.login()
-            if (allowLogin) {
+            if(userType.toLocaleLowerCase() === "manager") history.push('/managerHomepage');
+            else {
+                await contract.login(userType.toLocaleLowerCase());
                 switch (userType.toLocaleLowerCase()) {
                     case ("customer"):
-                        history.push('/customerHomepage')
-                        props.onLogin()
+                        history.push('/customerHomepage');
                         break;
                     case ("organization"):
-                        history.push('/organizationHomepage')
-                        props.onLogin()
+                        history.push('/organizationHomepage');
+                        break;
+                    default:
                         break;
                 }
             }
-            else {
-                alert("Login failed")
-            }
+            props.onLogin()
 
         }
         catch (e) {
-            alert("Login failed")
+            alert(e.reason);
         }
     }
 
