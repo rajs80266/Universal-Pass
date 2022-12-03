@@ -41,8 +41,29 @@ contract Universal_Pass {
         _;
     }
 
+    modifier onlyOrganization() {
+        require(
+            keccak256(bytes(users[msg.sender].userType)) == keccak256(bytes("organization")),
+            "Only the organization can call this function."
+        );
+        _;
+    }
+
+    modifier onlyCustomer() {
+        require(
+            keccak256(bytes(users[msg.sender].userType)) == keccak256(bytes("customer")),
+            "Only the customer can call this function."
+        );
+        _;
+    }
+
     constructor() {
         manager = msg.sender;
+        User storage user = users[manager];
+        user.username = "Manager";
+        user.userType = "manager";
+        user.authorized = true;
+        user.registered = true;
     }
 
     function register(string memory username, string memory userType)
@@ -98,8 +119,12 @@ contract Universal_Pass {
         return user;
     }
 
-    function login() public view returns (bool allowLogin) {
-        return  users[msg.sender].authorized;
+    function login(string memory userType) public view returns (bool allowLogin) {
+        require(
+            users[msg.sender].authorized && keccak256(bytes(users[msg.sender].userType)) == keccak256(bytes(userType)),
+            "User is not registered/authorized"
+        );
+        return true;
     }
 
     function isUserAuthorized(address userAddress)
@@ -110,10 +135,10 @@ contract Universal_Pass {
         return users[userAddress].authorized;
     }
 
-    function getAuthorizedUsers()
+    function getAuthorizedOrganizations()
         public
         view
-        returns (address[] memory unauthorizedUsers)
+        returns (address[] memory authorizedUsers)
     {
         return authorizedOrganizations;
     }
@@ -129,6 +154,7 @@ contract Universal_Pass {
 
     function addPass(uint256 numOfDays, uint256 cost)
         public
+        onlyOrganization
         returns (Pass memory passDetails)
     {
         require(users[msg.sender].authorized, "Requires manager approval");
@@ -139,6 +165,7 @@ contract Universal_Pass {
 
     function removePass(address organizationAddress, uint256 index)
         public
+        onlyOrganization
         returns (bool isDeleted)
     {
         for (
@@ -171,12 +198,14 @@ contract Universal_Pass {
         return organizationPassList[organizationAddress][index];
     }
 
-    function purchasePass(address organizationAddress, uint256 index)
+    function purchasePass(address payable organizationAddress, uint256 index)
         public
+        onlyCustomer
+        payable
         returns (PurchasedPass memory purchasedPassDetails)
     {
-        require(keccak256(bytes(users[msg.sender].userType)) == keccak256(bytes("customer")), "Only customer can purchase");
         Pass memory pass = organizationPassList[organizationAddress][index];
+
         PurchasedPass memory purchasedPass = PurchasedPass({
             organization: organizationAddress,
             numOfDays: pass.numOfDays,
@@ -191,6 +220,7 @@ contract Universal_Pass {
     function getPurchasedPass()
         public
         view
+        onlyCustomer
         returns (PurchasedPass[] memory purchasedPassList)
     {
         return purchasedPasses[msg.sender];
@@ -199,8 +229,10 @@ contract Universal_Pass {
     function getOrganizationPurchasedPass(address organizationAddress)
         public
         view
+        onlyCustomer
         returns (PurchasedPass[] memory purchasedPassList)
     {
         return organizationPurchasedPasses[msg.sender][organizationAddress];
     }
 }
+
