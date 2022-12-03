@@ -2,7 +2,7 @@ import { createStore } from "redux";
   
   import rootReducer from './reducers';
   
-  const LOCAL_STORAGE_NAME = "baniyaLocalData";
+  const LOCAL_STORAGE_NAME = "UniversalPass";
   
   class PersistedStore {
   

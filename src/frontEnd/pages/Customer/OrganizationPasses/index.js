@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import './style.css';
 
 const OrganizationPasses = (props) => {
-    console.log(props);
+
     const { contract, account } = props;
     const [orgs, setOrgs] = useState();
     const [org, setOrg] = useState();

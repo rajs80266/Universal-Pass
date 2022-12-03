@@ -20,7 +20,7 @@ const ScanQr = (props) => {
         if (cusAcc)
             checkIfValid()
     }, [cusAcc])
-    console.log(props);
+
     return (
         <div style={{ width: "500px", height: "500px" }}>
             <h2>Scan your qr code here</h2>

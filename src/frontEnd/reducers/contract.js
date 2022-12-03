@@ -4,7 +4,6 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 contract: action.payload.contract,
-
             }
         case "LOGOUT":
             return {

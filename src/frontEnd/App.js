@@ -39,14 +39,15 @@ const App = () => {
     loadContract(signer)
   }
   const loadContract = async (signer) => {
-    // Get deployed copy of music nft marketplace contract
     const contract = new ethers.Contract(UniversalPassAbiAddress.address, UniversalPassAbi.abi, signer)
-    // await contract.register(name, userType.toLocaleLowerCase())
-    dispatch({ type: "CONTRACT", payload: { contract } })
     setContract(contract)
   }
+  const onLogin = async () => {
+    dispatch({ type: "CONTRACT", payload: { contract } })
+  }
   useEffect(() => {
-    web3Handler()
+    if (!state.contract)
+      web3Handler()
   }, [])
   useEffect(() => {
     if (state.contract)
@@ -59,12 +60,12 @@ const App = () => {
           <Route
             exact
             path="/"
-            render={() => <Login contract={contract} />}
+            render={() => <Login contract={contract} onLogin={onLogin} />}
           />
           <Route
             exact
             path="/login"
-            render={() => <Login contract={contract} />}
+            render={() => <Login contract={contract} onLogin={onLogin}  />}
           />
           <Route
             exact

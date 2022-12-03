@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import './style.css';
 
 const HomePage = (props) => {
-    console.log(props);
+
     const history = useHistory();
     return (
         <div className={"org-home"}>

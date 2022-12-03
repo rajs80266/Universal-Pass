@@ -15,6 +15,7 @@ const Login = (props) => {
         try {
             if (userType.toLocaleLowerCase() == "manager") {
                 history.push('/managerHomepage')
+                props.onLogin()
                 return
             }
             const allowLogin = await contract.login()
@@ -22,9 +23,11 @@ const Login = (props) => {
                 switch (userType.toLocaleLowerCase()) {
                     case ("customer"):
                         history.push('/customerHomepage')
+                        props.onLogin()
                         break;
                     case ("organization"):
                         history.push('/organizationHomepage')
+                        props.onLogin()
                         break;
                 }
             }
@@ -56,14 +59,6 @@ const Login = (props) => {
                         </Select>
                     </FormControl>
                 </>
-                {/* <TextField id="standard-basic" label="Email" variant="standard" onChange={(e) => {
-                    setEmail(e.target.value)
-                    setError((e) => { return { ...e, email: false } })
-                }} error={errors.email} />
-                <TextField id="standard-basic" label="Password" variant="standard" type="password" onChange={(e) => {
-                    setPassword(e.target.value)
-                    setError((e) => { return { ...e, password: false } })
-                }} error={errors.password} /> */}
 
                 <Button className="login-btn" type="submit" color="primary" onClick={loginAccount} variant="contained">
                     Log in

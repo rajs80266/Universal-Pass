@@ -6,7 +6,7 @@ import OrganizationRequests from "../OrganizationRequests";
 import './style.css';
 
 const HomePage = (props) => {
-    console.log(props);
+
     const [value, setValue] = useState(-1)
 
     return (
