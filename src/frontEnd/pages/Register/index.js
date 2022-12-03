@@ -9,29 +9,14 @@ import { Link } from "react-router-dom";
 const Register = (props) => {
     const [userType, setUserType] = useState("customer");
     const [name, setName] = useState();
-    const [errors, setError] = useState({ email: false, password: false, name: false });
-    const [loading, setLoading] = useState(true)
-    const { contract } = props
-
-
-    // const onSubmit = () => {
-    //     if (!name) {
-    //         setError((e) => { return { ...e, name: true } })
-    //     }
-
-    //     if (!email) {
-    //         setError((e) => { return { ...e, email: true } })
-    //     }
-    //     if (!password) {
-    //         setError((e) => { return { ...e, password: true } })
-    //     }
-    // }
+    const { contract } = props;
 
     const signIn = async () => {
-        // Get deployed copy of music nft marketplace contract
-        console.log(name, userType.toLocaleLowerCase())
-        await contract.register(name, userType.toLocaleLowerCase())
-        setLoading(false)
+        try {
+            await contract.register(name, userType.toLocaleLowerCase());
+        } catch (e) {
+            alert(e.reason.substring(79, 127));
+        }
     }
 
     return (
@@ -52,8 +37,7 @@ const Register = (props) => {
                 </>
                 <TextField id="standard-basic" label="Name" variant="standard" onChange={(e) => {
                     setName(e.target.value)
-                    setError((e) => { return { ...e, name: false } })
-                }} error={errors.email} />
+                }} />
 
                 <Button className="login-btn" type="submit" color="primary" onClick={signIn} variant="contained">
                     Sign Up

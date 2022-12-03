@@ -11,8 +11,8 @@ const OrganizationPasses = (props) => {
 
     const buyPass = async (index) => {
         try {
-            const res = await contract.purchasePass(org, index)
-            alert("purchaed successfully")
+            const res = await contract.purchasePass(org, index);
+            alert("purchaed successfully");
         }
         catch (e) {
             alert(e)
@@ -22,20 +22,24 @@ const OrganizationPasses = (props) => {
 
     const fetchOrgPasses = async (address) => {
         try {
-            const res = await contract.getPassList(address)
+            const res = await contract.getPassList(address);
             setPasses(res)
-
         }
         catch (e) {
-            alert(e)
+            alert(e);
         }
 
     }
     const fetchOrg = async () => {
         try {
-            const res = await contract.getAuthorizedUsers()
-            setOrgs(res)
-
+            const res = await contract.getAuthorizedOrganizations();
+            const passDetails = [];
+            for(let i = 0; i < res.length; i++) {
+                console.log(res[i]);
+                const passDetail = await contract.users(res[i]);
+                passDetails.push({label: passDetail['username'], value: res[i]});
+            }
+            setOrgs(passDetails);
         }
         catch (e) {
             alert(e)
@@ -77,7 +81,7 @@ const OrganizationPasses = (props) => {
                     label="Select Organization"
                     onChange={(e) => setOrg(e.target.value)}
                 >
-                    {orgs && orgs.map((x) => <MenuItem value={x}>{x}</MenuItem>)}
+                    {orgs && orgs.map((x) => <MenuItem value={x.value}>{x.label}</MenuItem>)}
                 </Select>
             </FormControl>
             <div className="passes-grid">
