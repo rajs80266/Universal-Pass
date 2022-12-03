@@ -21,10 +21,13 @@ import Register from './pages/Register';
 import UniversalPassAbi from '../contractsData/Universal_Pass.json'
 import UniversalPassAbiAddress from '../contractsData/Universal_Pass-address.json'
 import { ethers } from "ethers"
+import { useDispatch, useSelector } from 'react-redux';
 
 const App = () => {
   const [account, setAccount] = useState(null)
   const [contract, setContract] = useState({})
+  const state = useSelector(state => state.contract)
+  const dispatch = useDispatch()
 
   const web3Handler = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -39,11 +42,16 @@ const App = () => {
     // Get deployed copy of music nft marketplace contract
     const contract = new ethers.Contract(UniversalPassAbiAddress.address, UniversalPassAbi.abi, signer)
     // await contract.register(name, userType.toLocaleLowerCase())
+    dispatch({ type: "CONTRACT", payload: { contract } })
     setContract(contract)
   }
   useEffect(() => {
     web3Handler()
   }, [])
+  useEffect(() => {
+    if (state.contract)
+      setContract(state.contract)
+  }, [state])
   return (
     <BrowserRouter>
       <Shell>
@@ -71,7 +79,7 @@ const App = () => {
           <Route
             exact
             path="/customerHomepage"
-            component={CustomerHomepage}
+            render={() => <CustomerHomepage account={account} />}
           />
           <Route
             exact
@@ -91,7 +99,7 @@ const App = () => {
           <Route
             exact
             path="/managerHomepage"
-            render={() => <ManagerHomepage contract={contract} account={account}/>}
+            render={() => <ManagerHomepage contract={contract} account={account} />}
           />
           <Route
             exact
@@ -127,7 +135,7 @@ const App = () => {
           <Route
             exact
             path="/organizationScanQr"
-            component={OrganizationScanQr}
+            render={() => <OrganizationScanQr contract={contract} />}
           />
         </Switch>
       </Shell>

@@ -225,14 +225,13 @@ contract Universal_Pass {
     {
         return purchasedPasses[msg.sender];
     }
-
-    function getOrganizationPurchasedPass(address organizationAddress)
+     function getOrganizationPurchasedPass(address cusAdd)
         public
         view
         onlyCustomer
         returns (PurchasedPass[] memory purchasedPassList)
     {
-        return organizationPurchasedPasses[msg.sender][organizationAddress];
+        return organizationPurchasedPasses[cusAdd][msg.sender];
     }
 }
 
