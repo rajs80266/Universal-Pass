@@ -41,8 +41,8 @@ $ npx hardhat node
 ### 7. Launch Frontend
 `$ npm run start`
 
-### 8. Using harhat wallets
-- When we have started the hardhat node , we will be able to see a bunch of private keys for testing , these private keys you can copy and go to meta mask and then go to import account and paste the private key there.
+### 8. Using hardhat wallets
+- When you have started the hardhat node you will be able to see a bunch of private keys for testing .These private keys you can copy and go to meta mask and then go to import account and paste the private key there.
 
 License
 ----
