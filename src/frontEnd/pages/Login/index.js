@@ -1,5 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { Link, useHistory } from "react-router-dom";
 import './style.css';
@@ -7,11 +8,12 @@ import './style.css';
 const Login = (props) => {
     const [userType, setUserType] = useState("customer");
     const { contract } = props;
-
+    const disptach = useDispatch()
     const history = useHistory();
     const loginAccount = async () => {
+      
         try {
-            if(userType.toLocaleLowerCase() === "manager") history.push('/managerHomepage');
+            if (userType.toLocaleLowerCase() === "manager") history.push('/managerHomepage');
             else {
                 await contract.login(userType.toLocaleLowerCase());
                 switch (userType.toLocaleLowerCase()) {
@@ -25,6 +27,7 @@ const Login = (props) => {
                         break;
                 }
             }
+            disptach({ type: "USER", payload: { userType } })
             props.onLogin()
 
         }

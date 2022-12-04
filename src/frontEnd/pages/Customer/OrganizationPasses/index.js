@@ -35,7 +35,6 @@ const OrganizationPasses = (props) => {
             const res = await contract.getAuthorizedOrganizations();
             const passDetails = [];
             for(let i = 0; i < res.length; i++) {
-                console.log(res[i]);
                 const passDetail = await contract.users(res[i]);
                 passDetails.push({label: passDetail['username'], value: res[i]});
             }
@@ -54,7 +53,6 @@ const OrganizationPasses = (props) => {
             fetchOrgPasses(org)
     }, [org])
 
-    const sampleCards = [{ tenure: "3 months", cost: "100$" }, { tenure: "6 months", cost: "200$" }, { tenure: "12 months", cost: "300$" }]
     const card = (numOfDays, cost, i) => {
         return (
             <Card variant="outlined" key={i}>

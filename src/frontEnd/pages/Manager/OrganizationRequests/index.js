@@ -10,7 +10,6 @@ const OrganizationRequests = (props) => {
         setReqs(res)
     }
     const onApprove = async (address) => {
-        console.log(address)
         try {
             const res = await contract.authorizeUser(address)
             alert("Success ")

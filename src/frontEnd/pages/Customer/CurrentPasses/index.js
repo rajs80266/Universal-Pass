@@ -5,12 +5,8 @@ import './style.css';
 const CurrentPasses = (props) => {
     const { contract } = props;
     const [myPasses, setMyPasses] = useState()
-    const sampleCards = [{ orgName: "xyz", dateOfpur: "1/1/2022", tenure: "3 months", cost: "100$" },
-    { orgName: "xyz", dateOfpur: "1/1/2022", tenure: "6 months", cost: "200$" },
-    { orgName: "xyz", dateOfpur: "1/1/2022", tenure: "12 months", cost: "300$" }]
     const getPasses = async () => {
         const res = await contract.getPurchasedPass()
-        console.log(res)
         setMyPasses(res)
     }
     useEffect(() => {
