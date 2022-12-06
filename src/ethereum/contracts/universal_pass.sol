@@ -200,7 +200,6 @@ contract Universal_Pass {
 
     function purchasePass(address payable organizationAddress, uint256 index)
         public
-        onlyCustomer
         payable
         returns (PurchasedPass memory purchasedPassDetails)
     {
