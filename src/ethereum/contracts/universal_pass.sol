@@ -204,6 +204,10 @@ contract Universal_Pass {
         returns (PurchasedPass memory purchasedPassDetails)
     {
         Pass memory pass = organizationPassList[organizationAddress][index];
+        require(
+            msg.value >= pass.cost,
+            "Payment does not meet requirements"
+        );
 
         PurchasedPass memory purchasedPass = PurchasedPass({
             organization: organizationAddress,
@@ -213,6 +217,9 @@ contract Universal_Pass {
         });
         purchasedPasses[msg.sender].push(purchasedPass);
         organizationPurchasedPasses[msg.sender][organizationAddress].push(purchasedPass);
+
+        organizationAddress.transfer(pass.cost);
+
         return purchasedPass;
     }
 
