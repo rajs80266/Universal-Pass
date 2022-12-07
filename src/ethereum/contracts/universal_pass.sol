@@ -226,7 +226,6 @@ contract Universal_Pass {
     function getPurchasedPass()
         public
         view
-        onlyCustomer
         returns (PurchasedPass[] memory purchasedPassList)
     {
         return purchasedPasses[msg.sender];
@@ -234,7 +233,6 @@ contract Universal_Pass {
      function getOrganizationPurchasedPass(address cusAdd)
         public
         view
-        onlyCustomer
         returns (PurchasedPass[] memory purchasedPassList)
     {
         return organizationPurchasedPasses[cusAdd][msg.sender];

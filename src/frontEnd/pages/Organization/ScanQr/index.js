@@ -8,11 +8,15 @@ const ScanQr = (props) => {
     const { contract } = props
     const checkIfValid = async () => {
         try {
+            props.setLoading(true)
             const res = await contract.getOrganizationPurchasedPass(cusAcc)
-            alert("Customer is a valid customer")
+            props.setLoading(false)
+
+            alert("Customer is a valid customer !")
         }
         catch (e) {
-            alert("Customer is not valid")
+            props.setLoading(false)
+            alert("Customer is not valid!")
         }
 
     }

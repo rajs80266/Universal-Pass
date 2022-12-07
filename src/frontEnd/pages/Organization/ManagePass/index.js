@@ -2,6 +2,9 @@ import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import './style.css';
+import Web3 from 'web3';
+
+
 
 const ManagePass = (props) => {
     const history = useHistory();
@@ -20,7 +23,15 @@ const ManagePass = (props) => {
             setErrors((e) => { return { ...e, validity: true } })
             return
         }
-        await contract.addPass(parseInt(validity), parseInt(amount))
+        try {
+            props.setLoading(true)
+            await contract.addPass(parseInt(validity), (Web3.utils.toWei(String(amount), 'ether')))
+            props.setLoading(false)
+        }
+        catch {
+            props.setLoading(false)
+            alert("somthinng went wrong")
+        }
 
 
     }

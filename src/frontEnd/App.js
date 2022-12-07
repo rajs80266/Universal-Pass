@@ -22,21 +22,33 @@ import UniversalPassAbi from '../contractsData/Universal_Pass.json'
 import UniversalPassAbiAddress from '../contractsData/Universal_Pass-address.json'
 import { ethers } from "ethers"
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from './components/loader';
 
 const App = () => {
   const [account, setAccount] = useState(null)
   const [contract, setContract] = useState({})
   const state = useSelector(state => state.contract)
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
   const web3Handler = async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    setAccount(accounts[0])
-    // Get provider from Metamask
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    // Get signer
-    const signer = provider.getSigner()
-    loadContract(signer)
+    setLoading(true)
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setAccount(accounts[0])
+      // Get provider from Metamask
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      // Get signer
+      const signer = provider.getSigner()
+      loadContract(signer)
+    }
+    catch {
+      setLoading(false)
+    }
+    finally {
+      setLoading(false)
+    }
+    setLoading(false)
   }
   const loadContract = async (signer) => {
     const contract = new ethers.Contract(UniversalPassAbiAddress.address, UniversalPassAbi.abi, signer)
@@ -56,36 +68,37 @@ const App = () => {
   return (
     <BrowserRouter>
       <Shell>
+        <Loader loading={loading} />
         <Switch>
           <Route
             exact
             path="/"
-            render={() => <Login contract={contract} onLogin={onLogin} />}
+            render={() => <Login contract={contract} onLogin={onLogin} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/login"
-            render={() => <Login contract={contract} onLogin={onLogin}  />}
+            render={() => <Login contract={contract} onLogin={onLogin} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/register"
-            render={() => <Register contract={contract} />}
+            render={() => <Register contract={contract} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/customerCurrentPasses"
-            render={() => <CustomerCurrentPasses contract={contract} />}
+            render={() => <CustomerCurrentPasses contract={contract} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/customerHomepage"
-            render={() => <CustomerHomepage account={account} />}
+            render={() => <CustomerHomepage account={account} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/customerOrganizationPasses"
-            render={() => <CustomerOrganizationPasses contract={contract} />}
+            render={() => <CustomerOrganizationPasses contract={contract} setLoading={setLoading} />}
           />
           <Route
             exact
@@ -100,7 +113,7 @@ const App = () => {
           <Route
             exact
             path="/managerHomepage"
-            render={() => <ManagerHomepage contract={contract} account={account} />}
+            render={() => <ManagerHomepage contract={contract} account={account} setLoading={setLoading} />}
           />
           <Route
             exact
@@ -115,7 +128,7 @@ const App = () => {
           <Route
             exact
             path="/organizationCurrentPasses"
-            render={() => <OrganizationCurrentPasses contract={contract} account={account} />}
+            render={() => <OrganizationCurrentPasses contract={contract} account={account} setLoading={setLoading} />}
 
           />
           <Route
@@ -131,12 +144,12 @@ const App = () => {
           <Route
             exact
             path="/organizationManagePass"
-            render={() => <OrganizationManagePass contract={contract} />}
+            render={() => <OrganizationManagePass contract={contract} setLoading={setLoading} />}
           />
           <Route
             exact
             path="/organizationScanQr"
-            render={() => <OrganizationScanQr contract={contract} />}
+            render={() => <OrganizationScanQr contract={contract} setLoading={setLoading} />}
           />
         </Switch>
       </Shell>

@@ -1,6 +1,8 @@
 import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import './style.css';
+import Web3 from 'web3';
+
 
 const OrganizationPasses = (props) => {
 
@@ -9,39 +11,57 @@ const OrganizationPasses = (props) => {
     const [org, setOrg] = useState();
     const [passes, setPasses] = useState();
 
-    const buyPass = async (index) => {
+    const buyPass = async (index,cost) => {
         try {
-            const res = await contract.purchasePass(org, index);
-            alert("purchaed successfully");
+            props.setLoading(true)
+            const res = await contract.purchasePass(org, index,{value:cost}) ;
+            alert("purchased successfully");
         }
         catch (e) {
             alert(e)
+        }
+        finally {
+            props.setLoading(false)
+
         }
     }
 
 
     const fetchOrgPasses = async (address) => {
         try {
+            props.setLoading(true)
+
             const res = await contract.getPassList(address);
             setPasses(res)
         }
         catch (e) {
             alert(e);
         }
+        finally {
+            props.setLoading(false)
+
+        }
 
     }
     const fetchOrg = async () => {
         try {
+            props.setLoading(true)
+
             const res = await contract.getAuthorizedOrganizations();
             const passDetails = [];
-            for(let i = 0; i < res.length; i++) {
+            for (let i = 0; i < res.length; i++) {
                 const passDetail = await contract.users(res[i]);
-                passDetails.push({label: passDetail['username'], value: res[i]});
+                passDetails.push({ label: passDetail['username'], value: res[i] });
             }
             setOrgs(passDetails);
         }
         catch (e) {
+            props.setLoading(false)
             alert(e)
+        }
+        finally{
+            props.setLoading(false)
+
         }
 
     }
@@ -61,9 +81,9 @@ const OrganizationPasses = (props) => {
                         {`Validitiy ${numOfDays}`}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {`Cost ${cost}`}
+                        {`Cost ${Web3.utils.fromWei(String(cost),"ether")} ethers`}
                     </Typography>
-                    <Button variant="contained" onClick={() => buyPass(i)}>
+                    <Button variant="contained" onClick={() => buyPass(i,cost)}>
                         Buy
                     </Button>
                 </CardContent>
@@ -83,7 +103,7 @@ const OrganizationPasses = (props) => {
                 </Select>
             </FormControl>
             <div className="passes-grid">
-                {passes && passes.map((c, i) => card(c.numOfDays.toNumber(), c.cost.toNumber(), i))}
+                {passes && passes.map((c, i) => card(c.numOfDays.toString(), c.cost.toString(), i))}
             </div>
         </div>
     );

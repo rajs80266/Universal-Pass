@@ -13,8 +13,11 @@ const Register = (props) => {
 
     const signIn = async () => {
         try {
+            props.setLoading(true)
             await contract.register(name, userType.toLocaleLowerCase());
+            props.setLoading(false)
         } catch (e) {
+            props.setLoading(false)
             alert(e.reason.substring(79, 127));
         }
     }

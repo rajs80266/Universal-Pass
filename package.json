@@ -18,7 +18,8 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "web3": "^1.8.1"
   },
   "scripts": {
     "deploy": "npx hardhat run src/ethereum/scripts/deploy.js --network localhost",

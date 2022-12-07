@@ -7,11 +7,14 @@ const CurrentPasses = (props) => {
     const [passes, setPasses] = useState();
     const fetchOrgPasses = async () => {
         try {
+            props.setLoading(true)
             const res = await contract.getPassList(account)
             setPasses(res)
+            props.setLoading(false)
 
         }
         catch (e) {
+            props.setLoading(false)
             alert(e)
         }
 
