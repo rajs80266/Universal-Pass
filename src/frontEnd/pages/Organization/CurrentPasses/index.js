@@ -1,6 +1,7 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import './style.css';
+import Web3 from "web3"
 
 const CurrentPasses = (props) => {
     const { contract, account } = props;
@@ -26,10 +27,10 @@ const CurrentPasses = (props) => {
         return (<Card variant="outlined">
             <CardContent>
                 <Typography variant="h5" component="div">
-                    {`Validitiy ${numOfDays}`}
+                    {`Validitiy(days) ${numOfDays}`}
                 </Typography>
                 <Typography variant="h5" component="div">
-                    {`Cost ${cost}`}
+                    {`Cost ${Web3.utils.fromWei(String(cost), "ether")} ethers`}
                 </Typography>
             </CardContent>
         </Card>)
@@ -39,7 +40,7 @@ const CurrentPasses = (props) => {
         <>
             <h2 style={{ alignSelf: "center" }}>Current Passes</h2>
             <div className="passes">
-                {passes && passes.map((c) => card(c.numOfDays.toNumber(), c.cost.toNumber()))}
+                {passes && passes.map((c) => card(c.numOfDays, c.cost))}
             </div>
         </>
     );

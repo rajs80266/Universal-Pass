@@ -58,6 +58,9 @@ const App = () => {
     dispatch({ type: "CONTRACT", payload: { contract } })
   }
   useEffect(() => {
+    window.ethereum.on('accountsChanged', function (accounts) {
+      setAccount(accounts[0])
+    })
     if (!state.contract)
       web3Handler()
   }, [])

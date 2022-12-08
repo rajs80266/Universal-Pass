@@ -45,11 +45,11 @@ const ManagePass = (props) => {
             <div className="add-pass">
                 <h4 style={{ justifySelf: "center" }}>Add new pass</h4>
 
-                <TextField id="standard-basic" label="Validity" variant="standard" onChange={(e) => {
+                <TextField id="standard-basic" label="Validity(days)" variant="standard" onChange={(e) => {
                     setValidity(e.target.value)
                     setErrors((e) => { return { ...e, validity: false } })
                 }} error={error.validity} />
-                <TextField id="standard-basic" label="Amount" variant="standard" onChange={(e) => {
+                <TextField id="standard-basic" label="Amount(ethers)" variant="standard" onChange={(e) => {
                     setAmount(e.target.value)
                     setErrors((e) => { return { ...e, amount: false } })
                 }} error={error.amount} />

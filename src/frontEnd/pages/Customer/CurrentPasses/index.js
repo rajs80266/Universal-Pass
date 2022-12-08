@@ -40,7 +40,7 @@ const CurrentPasses = (props) => {
                     {"Vate of purchase :" + toDateTime(purchasedOn)}
                 </Typography>
                 <Typography variant="h5" component="div">
-                    {`Validity : ${numOfDays} days`}
+                    {`Validity(days) : ${numOfDays} days`}
                 </Typography>
                 <Typography variant="h5" component="div">
                 {`Cost: ${Web3.utils.fromWei(String(cost),"ether")} ethers`}

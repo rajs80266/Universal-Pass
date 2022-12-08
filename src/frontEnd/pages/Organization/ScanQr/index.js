@@ -6,13 +6,20 @@ import './style.css';
 const ScanQr = (props) => {
     const [cusAcc, setCusAccount] = useState()
     const { contract } = props
+    function toDateTime(secs) {
+        var t = new Date(1970, 0, 1); // Epoch
+        t.setSeconds(secs);
+        return t;
+    }
     const checkIfValid = async () => {
         try {
             props.setLoading(true)
             const res = await contract.getOrganizationPurchasedPass(cusAcc)
             props.setLoading(false)
-
-            alert("Customer is a valid customer !")
+            if (res.length > 0)
+                alert(`Customer is a valid customer ! \n purchased on ${toDateTime(res[0].purchasedOn)} \n valid for ${res[0].numOfDays} days`)
+            else
+                throw "invalid"
         }
         catch (e) {
             props.setLoading(false)
