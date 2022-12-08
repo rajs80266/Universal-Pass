@@ -10,9 +10,13 @@ const CurrentPasses = (props) => {
     const getPasses = async () => {
         props.setLoading(true)
         try {
-            const res = await contract.getPurchasedPass()
-            setMyPasses(res)
-
+            const res = await contract.getPurchasedPass();
+            const passDetails = [];
+            for (let i = 0; i < res.length; i++) {
+                const { username } = await contract.users(res[i].organization);
+                passDetails.push({ ...res[i], organization: username });
+            }
+            setMyPasses(passDetails);
         }
         finally {
             props.setLoading(false)
@@ -34,10 +38,10 @@ const CurrentPasses = (props) => {
         return (<Card variant="outlined">
             <CardContent>
                 <Typography variant="h5" component="div">
-                    {"Organization " + organization}
+                    {"Organization: " + organization}
                 </Typography>
                 <Typography variant="h5" component="div">
-                    {"Vate of purchase :" + toDateTime(purchasedOn)}
+                    {"Date of purchase: " + String(toDateTime(purchasedOn)).substring(0, 15)}
                 </Typography>
                 <Typography variant="h5" component="div">
                     {`Validity(days) : ${numOfDays} days`}
